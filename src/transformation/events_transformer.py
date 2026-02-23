@@ -1,6 +1,8 @@
 import os
 import json
+import pandas as pd
 from src.config.mongo_client import get_mongo_client
+from src.analytics.warehouse_simulator import save
 
 DB_NAME = os.getenv("MONGO_DB", "commercepulse")
 
@@ -44,7 +46,7 @@ def extract_order_id(raw_payload):
     return None
 
 
-def main():
+def transform_events():
     client = get_mongo_client()
     db = client[DB_NAME]
 
@@ -75,6 +77,27 @@ def main():
             transformed += 1
 
     print(f"Transformados {transformed} eventos.")
+
+    return curated_col
+
+
+def load_to_warehouse(curated_col):
+    data = list(curated_col.find({}, {"_id": 0}))
+
+    if not data:
+        print("Nenhum dado para carregar no warehouse.")
+        return
+
+    df = pd.DataFrame(data)
+
+    save(df, "fact_events")
+
+    print("Dados carregados no warehouse com sucesso.")
+
+
+def main():
+    curated_col = transform_events()
+    load_to_warehouse(curated_col)
 
 
 if __name__ == "__main__":
