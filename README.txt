@@ -69,8 +69,8 @@ commercepulse_case_study/
 ## 4. Configuration
 
 ### Environment Variables (.env)
-MONGO_URI=mongodb+srv://admin:CommercePulse123@commercepulse-cluster.8wacyqd.mongodb.net/?appName=commercepulse-cluster
-MONGO_DB=commercepulse
+MONGO_URI=
+MONGO_DB=
 
 
 ### Dependencies
