@@ -69,8 +69,8 @@ commercepulse_case_study/
 ## 4. Configuration
 
 ### Environment Variables (.env)
-MONGO_URI=
-MONGO_DB=
+MONGO_URI=your_mongodb_connection_string
+MONGO_DB=commercepulse
 
 
 ### Dependencies
